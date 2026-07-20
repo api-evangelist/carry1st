@@ -1,0 +1,33 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+docs: https://pay1st-docs.carry1st.com/reference/configuring-api-credentials
+notes: >-
+  Two-stage model. Stage 1: an API Key + API Secret (HTTP Basic, Base64(API_KEY:API_SECRET))
+  authenticates the /api/pay1st/auth/token call to mint a short-lived Access Token plus a
+  Refresh Token. Stage 2: every other Gateway request carries the Access Token in the
+  AccessToken header as "Bearer <AccessToken>", and every mutating request is additionally
+  signed with a hex HMAC-SHA256 X-SIGNATURE (over X-TIMESTAMP + request JSON, keyed by the
+  Signing Key) to prove the payload was not tampered with. Credentials are generated in the
+  Pay1st Console.
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Base64(API_KEY:API_SECRET) used only on the auth/token and auth/refresh endpoints.
+  sources:
+  - openapi/carry1st-pay1st-gateway-openapi.yml
+- name: accessToken
+  type: apiKey
+  in: header
+  parameter: AccessToken
+  description: Bearer <AccessToken> issued by generateAccessToken; required on all Gateway API
+    requests.
+  sources:
+  - openapi/carry1st-pay1st-gateway-openapi.yml
