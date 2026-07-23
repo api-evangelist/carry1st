@@ -1,0 +1,282 @@
+openapi: 3.1.0
+info:
+  title: Pay1st Gateway Authentication Payments API
+  version: '4.0'
+  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.
+  contact:
+    name: Pay1st Developer Documentation
+    url: https://pay1st-docs.carry1st.com/
+  x-apievangelist-derived-from: https://pay1st-docs.carry1st.com/
+servers:
+- url: https://api-gateway.carry1st.com
+  description: Production
+- url: https://api-gateway.platform.stage.carry1st.com
+  description: Sandbox / Staging
+tags:
+- name: Payments
+  description: Create payment requests and query their status.
+paths:
+  /api/pay1st/payments/create:
+    post:
+      operationId: createPaymentRequest
+      tags:
+      - Payments
+      summary: Create Payment Request
+      description: Create a payment request before a payment is made. Requires a valid Access Token plus an X-SIGNATURE (hex HMAC-SHA256) and X-TIMESTAMP header.
+      security:
+      - accessToken: []
+      parameters:
+      - $ref: '#/components/parameters/XSignature'
+      - $ref: '#/components/parameters/XTimestamp'
+      requestBody:
+        required: true
+        content:
+          application/vnd.carry1st.payments.payment+json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentRequest'
+            example:
+              countryCode: NG
+              currencyCode: NGN
+              amount: 100
+              partnerReference: 1119bf84-dc97-4be9-aa67-ec27d7003f07
+              products:
+              - title: 10Credits
+                sku: '12345'
+                price: 100
+                quantity: 1
+                currencyCode: NGN
+              metadata:
+              - key: customerId
+                value: '1'
+      responses:
+        '201':
+          description: Payment request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+              example:
+                reference: C-113976984708914-P
+                partnerReference: e27b3b79-5ab3-4c1b-806f-1428c08d8637
+                countryCode: NG
+                currencyCode: NGN
+                amount: 100
+                status: NEW
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/pay1st/payments:
+    get:
+      operationId: queryPaymentStatus
+      tags:
+      - Payments
+      summary: Query Payment Status
+      description: Query the current status of a payment using its Pay1st reference.
+      security:
+      - accessToken: []
+      parameters:
+      - name: reference
+        in: query
+        required: true
+        description: The Pay1st reference returned by createPaymentRequest.
+        schema:
+          type: string
+          example: C-142710055596150-P
+      responses:
+        '200':
+          description: The payment and its current status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
+  schemas:
+    Metadata:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    PaymentDetail:
+      allOf:
+      - $ref: '#/components/schemas/PaymentResponse'
+      - type: object
+        properties:
+          channelId:
+            type: integer
+          channelName:
+            type: string
+          partnerSettings:
+            type: object
+            properties:
+              partnerId:
+                type: integer
+              webhookUrl:
+                type: string
+              successCallbackUrl:
+                type: string
+              failureCallbackUrl:
+                type: string
+              pendingCallbackUrl:
+                type: string
+              cancelCallbackUrl:
+                type: string
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+          metadata:
+            type: array
+            items:
+              $ref: '#/components/schemas/Metadata'
+    PaymentStatus:
+      type: string
+      description: Payment lifecycle status.
+      enum:
+      - NEW
+      - PENDING
+      - SUCCESSFUL
+      - FAILED
+      - CANCELLED
+      - ABANDONED
+    PaymentResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+        partnerReference:
+          type: string
+        countryCode:
+          type: string
+        currencyCode:
+          type: string
+        amount:
+          type: number
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+    Product:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+        sku:
+          type: string
+        title:
+          type: string
+    CreatePaymentRequest:
+      type: object
+      required:
+      - amount
+      - countryCode
+      - currencyCode
+      - partnerReference
+      - products
+      - metadata
+      properties:
+        amount:
+          type: number
+          description: The amount to pay.
+        countryCode:
+          type: string
+          description: ISO-2 country code, e.g. ZA.
+        currencyCode:
+          type: string
+        partnerReference:
+          type: string
+          description: Unique partner reference for reconciliation; must be unique for the lifetime of the integration.
+        callbackSuccessUrl:
+          type: string
+        callbackFailureUrl:
+          type: string
+        callbackPendingUrl:
+          type: string
+        callbackCancelUrl:
+          type: string
+        webhookUrl:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/Metadata'
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+  responses:
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Base64(API_KEY:API_SECRET) used only on the auth/token and auth/refresh endpoints.
+    accessToken:
+      type: apiKey
+      in: header
+      name: AccessToken
+      description: Bearer <AccessToken> issued by generateAccessToken; required on all Gateway API requests.

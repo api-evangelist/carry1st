@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Pay1st Gateway Authentication Refunds API
+  version: '4.0'
+  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.
+  contact:
+    name: Pay1st Developer Documentation
+    url: https://pay1st-docs.carry1st.com/
+  x-apievangelist-derived-from: https://pay1st-docs.carry1st.com/
+servers:
+- url: https://api-gateway.carry1st.com
+  description: Production
+- url: https://api-gateway.platform.stage.carry1st.com
+  description: Sandbox / Staging
+tags:
+- name: Refunds
+  description: Request refunds against processed transactions.
+paths:
+  /api/pay1st/transactions/refunds/create:
+    post:
+      operationId: createRefundRequest
+      tags:
+      - Refunds
+      summary: Refund Request
+      description: 'Request a refund against a processed transaction. If no amount is supplied a full refund is processed. Requires Access Token plus X-SIGNATURE and X-TIMESTAMP. NOTE: this API is in beta.'
+      security:
+      - accessToken: []
+      parameters:
+      - $ref: '#/components/parameters/XSignature'
+      - $ref: '#/components/parameters/XTimestamp'
+      requestBody:
+        required: true
+        content:
+          application/vnd.carry1st.payments.refund+json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+            example:
+              transactionReference: C-12345-T
+              partnerRefundReference: P-12345
+              amount: 50.0
+              reason: Customer requested refund
+      responses:
+        '201':
+          description: Refund request accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
+  schemas:
+    RefundRequest:
+      type: object
+      required:
+      - transactionReference
+      properties:
+        transactionReference:
+          type: string
+          description: The Pay1st identifier obtained from createPaymentRequest.
+        partnerRefundReference:
+          type: string
+        amount:
+          type: number
+          description: If omitted, a full refund is processed.
+        reason:
+          type: string
+        refundWebhookUrl:
+          type: string
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+    RefundResponse:
+      type: object
+      properties:
+        refundReference:
+          type: string
+        transactionReference:
+          type: string
+        partnerReference:
+          type: string
+        partnerRefundReference:
+          type: string
+        amount:
+          type: number
+        currencyCode:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - PROCESSING
+          - SUCCESSFUL
+          - FAILED
+          - REJECTED
+        handlingType:
+          type: string
+          enum:
+          - PSP_API
+          - PSP_MANUAL
+          - NO_REFUND
+        fullRefund:
+          type: boolean
+        reason:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+  responses:
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Base64(API_KEY:API_SECRET) used only on the auth/token and auth/refresh endpoints.
+    accessToken:
+      type: apiKey
+      in: header
+      name: AccessToken
+      description: Bearer <AccessToken> issued by generateAccessToken; required on all Gateway API requests.

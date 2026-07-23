@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: Pay1st Gateway Authentication API
+  version: '4.0'
+  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.
+  contact:
+    name: Pay1st Developer Documentation
+    url: https://pay1st-docs.carry1st.com/
+  x-apievangelist-derived-from: https://pay1st-docs.carry1st.com/
+servers:
+- url: https://api-gateway.carry1st.com
+  description: Production
+- url: https://api-gateway.platform.stage.carry1st.com
+  description: Sandbox / Staging
+tags:
+- name: Authentication
+  description: Obtain and refresh access tokens for Gateway API requests.
+paths:
+  /api/pay1st/auth/token:
+    post:
+      operationId: generateAccessToken
+      tags:
+      - Authentication
+      summary: Generate Access Token
+      description: Authenticate with your API Key and API Secret (HTTP Basic) to obtain an Access Token and Refresh Token used for all subsequent Gateway requests.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/vnd.carry1st.payments.partnerauthentication+json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+            example:
+              role: API_USER
+      responses:
+        '200':
+          description: Access and refresh tokens issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /api/pay1st/auth/refresh:
+    post:
+      operationId: refreshAccessToken
+      tags:
+      - Authentication
+      summary: Generate Refresh Token
+      description: Extend the lifetime of an Access Token using the Refresh Token.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenResponse'
+      responses:
+        '200':
+          description: A new Access Token has been issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+    TokenRequest:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: string
+          enum:
+          - API_USER
+          description: Must be set to API_USER.
+    TokenResponse:
+      type: object
+      properties:
+        role:
+          type: string
+          example: API_USER
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Base64(API_KEY:API_SECRET) used only on the auth/token and auth/refresh endpoints.
+    accessToken:
+      type: apiKey
+      in: header
+      name: AccessToken
+      description: Bearer <AccessToken> issued by generateAccessToken; required on all Gateway API requests.

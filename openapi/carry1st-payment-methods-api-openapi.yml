@@ -1,0 +1,101 @@
+openapi: 3.1.0
+info:
+  title: Pay1st Gateway Authentication Payment Methods API
+  version: '4.0'
+  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.
+  contact:
+    name: Pay1st Developer Documentation
+    url: https://pay1st-docs.carry1st.com/
+  x-apievangelist-derived-from: https://pay1st-docs.carry1st.com/
+servers:
+- url: https://api-gateway.carry1st.com
+  description: Production
+- url: https://api-gateway.platform.stage.carry1st.com
+  description: Sandbox / Staging
+tags:
+- name: Payment Methods
+  description: Discover the local payment methods available per country.
+paths:
+  /api/pay1st/payments/methods:
+    get:
+      operationId: listPaymentMethods
+      tags:
+      - Payment Methods
+      summary: List Payment Methods
+      description: List the supported local payment methods for a given country.
+      security:
+      - accessToken: []
+      parameters:
+      - name: countryCode
+        in: query
+        required: true
+        description: ISO-2 country code, e.g. ZA, NG, KE, EG, MA, GH.
+        schema:
+          type: string
+          example: NG
+      responses:
+        '200':
+          description: A list of available payment methods.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    PaymentMethod:
+      type: object
+      properties:
+        channelId:
+          type: integer
+          example: 108
+        channelName:
+          type: string
+          example: Opay Wallet
+        countryCode:
+          type: string
+          example: NG
+        currencyCode:
+          type: string
+          example: NGN
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+  responses:
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Base64(API_KEY:API_SECRET) used only on the auth/token and auth/refresh endpoints.
+    accessToken:
+      type: apiKey
+      in: header
+      name: AccessToken
+      description: Bearer <AccessToken> issued by generateAccessToken; required on all Gateway API requests.
