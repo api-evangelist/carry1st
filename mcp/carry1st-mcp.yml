@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+note: >-
+  No official hosted/remote Pay1st MCP server was found. This is a candidate tool list derived
+  one-to-one from the documented Gateway operations, for use in generating an MCP server.
+server:
+  name: carry1st-pay1st
+  transport: http
+tools:
+- name: generate_access_token
+  description: Authenticate with API Key/Secret to obtain an Access Token and Refresh Token.
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#generateAccessToken
+- name: refresh_access_token
+  description: Extend the lifetime of an Access Token using the Refresh Token.
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#refreshAccessToken
+- name: list_payment_methods
+  description: List supported local payment methods for a country.
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#listPaymentMethods
+- name: create_payment_request
+  description: Create a signed payment request before a payment is made.
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#createPaymentRequest
+- name: query_payment_status
+  description: Query the current status of a payment by its Pay1st reference.
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#queryPaymentStatus
+- name: create_refund_request
+  description: Request a refund against a processed transaction (beta).
+  source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#createRefundRequest

@@ -1,22 +1,246 @@
 aid: carry1st
 name: Carry1st
-description: Carry1st is a company surfaced as a portfolio company of a16z and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Carry1st is Africa's leading mobile games publisher and digital commerce
+  platform, headquartered in South Africa and operating across high-growth
+  African markets including Nigeria, South Africa, Kenya, Ghana, Egypt, and
+  Morocco. Beyond publishing and distributing mobile games from partners such as
+  Riot Games, Activision, and Supercell, Carry1st operates Pay1st, a payment
+  gateway that lets digital-content and game developers accept payments through
+  120+ local payment methods across six African geographies. Pay1st offers a
+  single unified API, acts as Merchant of Record (handling compliance, taxation,
+  FX, and risk so businesses collect in USD), and supports hosted-payment,
+  game-client, and Carry1st Shop marketplace integration styles. Carry1st is
+  backed by a16z. This profile was enriched by the API Evangelist pipeline from
+  the public Pay1st developer documentation.
 url: https://raw.githubusercontent.com/api-evangelist/carry1st/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - a16z
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: portfolio-lead-enriched
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://www.carry1st.com/favicon.ico
 tags:
 - Company
-apis: []
+- Payments
+- Payment Gateway
+- Fintech
+- Gaming
+- Mobile Games
+- Africa
+- Digital Commerce
+- Merchant of Record
+- Games Publishing
+apis:
+- aid: carry1st:carry1st-authentication-api
+  name: Carry1st Authentication API
+  description: Obtain and refresh access tokens for Gateway API requests.
+  humanURL: https://pay1st-docs.carry1st.com/
+  baseURL: https://api-gateway.carry1st.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/carry1st-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://pay1st-docs.carry1st.com/
+  - type: APIReference
+    url: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+  - type: GettingStarted
+    url: https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist
+  - type: Authentication
+    url: authentication/carry1st-authentication.yml
+  - type: Sandbox
+    url: sandbox/carry1st-sandbox.yml
+  - type: Idempotency
+    url: conventions/carry1st-conventions.yml
+  - type: Conventions
+    url: conventions/carry1st-conventions.yml
+  - type: ErrorCatalog
+    url: errors/carry1st-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/carry1st-pay1st-webhooks.yml
+  - type: DataModel
+    url: data-model/carry1st-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/carry1st-agentic-access.yml
+- aid: carry1st:carry1st-payment-methods-api
+  name: Carry1st Payment Methods API
+  description: Discover the local payment methods available per country.
+  humanURL: https://pay1st-docs.carry1st.com/
+  baseURL: https://api-gateway.carry1st.com
+  tags:
+  - Payment Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/carry1st-payment-methods-api-openapi.yml
+  - type: Documentation
+    url: https://pay1st-docs.carry1st.com/
+  - type: APIReference
+    url: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+  - type: GettingStarted
+    url: https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist
+  - type: Authentication
+    url: authentication/carry1st-authentication.yml
+  - type: Sandbox
+    url: sandbox/carry1st-sandbox.yml
+  - type: Idempotency
+    url: conventions/carry1st-conventions.yml
+  - type: Conventions
+    url: conventions/carry1st-conventions.yml
+  - type: ErrorCatalog
+    url: errors/carry1st-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/carry1st-pay1st-webhooks.yml
+  - type: DataModel
+    url: data-model/carry1st-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/carry1st-agentic-access.yml
+- aid: carry1st:carry1st-payments-api
+  name: Carry1st Payments API
+  description: Create payment requests and query their status.
+  humanURL: https://pay1st-docs.carry1st.com/
+  baseURL: https://api-gateway.carry1st.com
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/carry1st-payments-api-openapi.yml
+  - type: Documentation
+    url: https://pay1st-docs.carry1st.com/
+  - type: APIReference
+    url: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+  - type: GettingStarted
+    url: https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist
+  - type: Authentication
+    url: authentication/carry1st-authentication.yml
+  - type: Sandbox
+    url: sandbox/carry1st-sandbox.yml
+  - type: Idempotency
+    url: conventions/carry1st-conventions.yml
+  - type: Conventions
+    url: conventions/carry1st-conventions.yml
+  - type: ErrorCatalog
+    url: errors/carry1st-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/carry1st-pay1st-webhooks.yml
+  - type: DataModel
+    url: data-model/carry1st-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/carry1st-agentic-access.yml
+- aid: carry1st:carry1st-refunds-api
+  name: Carry1st Refunds API
+  description: Request refunds against processed transactions.
+  humanURL: https://pay1st-docs.carry1st.com/
+  baseURL: https://api-gateway.carry1st.com
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/carry1st-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://pay1st-docs.carry1st.com/
+  - type: APIReference
+    url: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+  - type: GettingStarted
+    url: https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist
+  - type: Authentication
+    url: authentication/carry1st-authentication.yml
+  - type: Sandbox
+    url: sandbox/carry1st-sandbox.yml
+  - type: Idempotency
+    url: conventions/carry1st-conventions.yml
+  - type: Conventions
+    url: conventions/carry1st-conventions.yml
+  - type: ErrorCatalog
+    url: errors/carry1st-problem-types.yml
+  - type: Webhooks
+    url: asyncapi/carry1st-pay1st-webhooks.yml
+  - type: DataModel
+    url: data-model/carry1st-data-model.yml
+  - type: AgenticAccess
+    url: agentic-access/carry1st-agentic-access.yml
+common:
+- type: DeveloperPortal
+  url: https://pay1st-docs.carry1st.com/
+- type: Documentation
+  url: https://pay1st-docs.carry1st.com/
+- type: APIReference
+  url: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+- type: GettingStarted
+  url: https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist
+- type: Website
+  url: https://www.carry1st.com/
+- type: Blog
+  url: https://www.carry1st.com/blog
+- type: TermsOfService
+  url: https://www.carry1st.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.carry1st.com/privacy-policy
+- type: Support
+  url: https://www.carry1st.com/contact
+- type: ChangeLog
+  url: changelog/carry1st-changelog.yml
+- type: Authentication
+  url: authentication/carry1st-authentication.yml
+- type: Idempotency
+  url: conventions/carry1st-conventions.yml
+- type: Conventions
+  url: conventions/carry1st-conventions.yml
+- type: ErrorCatalog
+  url: errors/carry1st-problem-types.yml
+- type: Sandbox
+  url: sandbox/carry1st-sandbox.yml
+- type: Lifecycle
+  url: lifecycle/carry1st-lifecycle.yml
+- type: Deprecation
+  url: https://pay1st-docs.carry1st.com/reference/gateway-migration-guide
+- type: DomainSecurity
+  url: security/carry1st-domain-security.yml
+- type: Conformance
+  url: conformance/carry1st-conformance.yml
+- type: WellKnown
+  url: well-known/carry1st-well-known.yml
+- type: MCPServer
+  url: mcp/carry1st-mcp.yml
+- type: LLMsTxt
+  url: llms/carry1st-llms.txt
+- type: Packages
+  url: packages/carry1st-packages.yml
+- type: DataModel
+  url: data-model/carry1st-data-model.yml
+- type: Webhooks
+  url: asyncapi/carry1st-pay1st-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/carry1st-agentic-access.yml
+- type: Arazzo
+  name: Pay1st - collect a payment
+  url: arazzo/carry1st-collect-payment.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

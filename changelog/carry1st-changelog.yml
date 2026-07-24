@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/gateway-migration-guide
+scheme: uri-path-version
+current_version: v4.0
+entries:
+- version: v4.0
+  breaking: true
+  highlights:
+  - Major version of the Pay1st Gateway integration with breaking changes vs v3.x.
+  - Existing Pay1st Users migrate to Partner Users; Administrator and Read-Only roles carried over.
+  - Product and Product Bundles are no longer managed server-side; products are specified inline on Create Payment Request.
+  - Summary Webhooks replaced by Payment Webhook Events; externalReference to partnerReference, playerId to customerId, amount to orderAmount (no longer in cents).
+  - Old Basic Auth Token/Username/Password credentials are shredded and replaced by API Key/Secret + Signing Key.
+  - Both old and new integrations can run in parallel until the old one is decommissioned.
+- version: v3.1
+  breaking: false
+  highlights:
+  - Prior documented Gateway version.
+- version: v3.0
+  breaking: false
+  highlights:
+  - Earlier documented Gateway version.
+notes: >-
+  Carry1st publishes no dated, entry-by-entry changelog; version history is captured from the
+  Gateway Migration Guide and the versioned documentation paths (v3.0, v3.1, v4.0).

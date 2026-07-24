@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/handling-error-codes
+format: custom
+envelope:
+  description: >-
+    All Pay1st error responses return a 4xx (or 5xx) HTTP status with a JSON body carrying
+    errorMessage, errorCode, and sessionId. There is no application/problem+json (RFC 9457)
+    media type; the envelope is provider-specific.
+  fields:
+    errorMessage: A human-readable message detailing the error that occurred.
+    errorCode: A code identifying the error source.
+    sessionId: Session identifier to send to the Pay1st Implementation Manager for troubleshooting.
+  example:
+    errorMessage: ERROR_MESSAGE
+    errorCode: ERROR_CODE
+    sessionId: SESSION_ID
+problems:
+- status: 400
+  title: Bad Request
+  remediation: >-
+    Check the payload or params. For signed requests, the X-SIGNATURE may not match the
+    server, or the X-TIMESTAMP may not be within 5 minutes of the Access Token.
+- status: 401
+  title: Unauthorized
+  remediation: Check the auth credentials (API Key/Secret combination or Access Token).
+- status: 403
+  title: Forbidden
+  remediation: The credentials provided do not have access to the resource requested.
+- status: 404
+  title: Not Found
+  remediation: The requested resource does not exist.
+- status: 405
+  title: Method Not Allowed
+  remediation: Check the HTTP request type and the Content-Type header.
+- status: 429
+  title: Too Many Requests
+  remediation: The partner is sending too many requests and is being rate limited; back off.
+- status: 500
+  title: Internal Server Error
+  remediation: Raise the sessionId to the Pay1st Implementation Manager.

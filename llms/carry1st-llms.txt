@@ -1,0 +1,37 @@
+# Pay1st Documentation
+
+> Looking for a solution to unlock a new set of consumers in Africa who do not have access to traditional banking? Look no further than our product that enables local payments in Africa for digital content providers! With our cutting-edge technology, mobile game developers can now bypass app store fees and reach a wider audience in Africa. Our product allows for seamless and secure transactions, enabling consumers without bank accounts to access digital content with ease. With our solution, you can tap into the immense potential of the African market and expand your business like never before. Say goodbye to app store fees and hello to a new world of possibilities with our innovative payment solution. Welcome to Pay1st, designed to help gamers discover and purchase their favorite gaming content conveniently. Our product offerings are designed to simplify and streamline the payment processes for gamers and businesses. With the integration of our payment system, you can easily accept payments from a variety of sources, including local and global credit and debit cards, mobile wallets, cryptocurrency, and bank transfers.
+
+## API Reference
+- [Pay1st Overview and Integration Styles](https://pay1st-docs.carry1st.com/reference/pay1st-introduction.md): Unlock monetization instantly with easy-to-use API documentation
+- [Shop Integration - Step by Step Checklist](https://pay1st-docs.carry1st.com/reference/shop-integration-step-by-step-checklist.md): Use this checklist to track your progress or to plan ahead
+- [Gateway Integration - Step by Step Checklist](https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist.md): Use this checklist to track the Partner’s progress or to plan ahead
+- [Glossary of Terms](https://pay1st-docs.carry1st.com/reference/glossary.md): This is a glossary of terms and phrases used in the Pay1st Integrations
+- [Get Started with the Shop Integration](https://pay1st-docs.carry1st.com/reference/shop-integration-overview.md): Configure Products, Product Bundles and Webhooks
+- [User Info Webhook](https://pay1st-docs.carry1st.com/reference/user-info-webhook.md): This webhook is used to validate a user who has selected a game/product in the shop.
+- [Summary Webhook](https://pay1st-docs.carry1st.com/reference/summary-webhook.md): This webhook is used to notify the partner that a Payment has been completed and that the customer’s order should be fulfilled
+- [Get Started with the Gateway Integration](https://pay1st-docs.carry1st.com/reference/gateway-api-overview.md)
+- [Configuring API Credentials](https://pay1st-docs.carry1st.com/reference/configuring-api-credentials.md): Use the Pay1st Console to generate the API Credentials for your integration
+- [Configuring Webhooks and Callbacks](https://pay1st-docs.carry1st.com/reference/configuring-webhooks-and-callbacks.md): Use the Pay1st Console to generate the Webhooks and Callbacks for your integrations
+- [Authentication - Generate Access Token](https://pay1st-docs.carry1st.com/reference/authentication-partner-token-api.md): The Access Token API is used to authenticate all other Gateway Integration API requests
+- [Authentication - Generate Refresh Token](https://pay1st-docs.carry1st.com/reference/authentication-refresh-token.md): The Refresh Token API is used to extend the lifetime of the Access Token.
+- [List Payment Methods](https://pay1st-docs.carry1st.com/reference/list-payment-methods.md): Use this API to list the supported payment methods provided by Pay1st
+- [Create Payment Request](https://pay1st-docs.carry1st.com/reference/create-payment-request.md): Use this API to create Payment Requests with the Pay1st Gateway
+- [Building Pay1st Payment Links](https://pay1st-docs.carry1st.com/reference/building-pay1st-checkout-links.md): Use this API to build the payment links which are to redirect from the Partner’s Platform to the Pay1st Gateway.
+- [Query Payment Status](https://pay1st-docs.carry1st.com/reference/query-payment-status.md): Use this API if you need to query the status of a payment
+- [Fulfilment Completion Webhooks](https://pay1st-docs.carry1st.com/reference/fulfilment-webhook.md): Use this API to notify the Pay1st Gateway about successful fulfilment completion
+- [Refund Request](https://pay1st-docs.carry1st.com/reference/refund-api.md): Use this API to request refunds through the Pay1st Gateway
+- [Refund Webhook Notifications](https://pay1st-docs.carry1st.com/reference/refund-webhook-notifications.md): Use the Pay1st Console to generate the Webhooks and Callbacks for your integrations
+- [Query Refund by Reference](https://pay1st-docs.carry1st.com/reference/query-refund-by-reference.md): Use this API to query refunds by their refund reference through the Pay1st Gateway.
+- [List Refunds](https://pay1st-docs.carry1st.com/reference/list-refund-by-transaction-reference.md): Use this API to list refunds by their transaction reference through the Pay1st Gateway.
+- [Chargeback Webhook Notifications](https://pay1st-docs.carry1st.com/reference/chargeback-webhooks.md): Use the Pay1st Console to generate the Webhooks and Callbacks for your integrations
+- [Query Chargeback Transactions](https://pay1st-docs.carry1st.com/reference/query-chargeback-transactions.md): Use this API to get chargeback statuses for transactions through the Pay1st Gateway
+- [List Chargebacks](https://pay1st-docs.carry1st.com/reference/list-chargebacks.md): Use this API to list chargeback transactions through the Pay1st Gateway
+- [View Chargeback Details](https://pay1st-docs.carry1st.com/reference/view-chargeback-details.md): Use this API to get chargeback details for chargeback transactions through the Pay1st Gateway
+- [List Chargeback Evidences](https://pay1st-docs.carry1st.com/reference/list-chargeback-evidences.md): Use this API to view the chargeback evidences/materials for chargeback transactions through the Pay1st Gateway
+- [Download Chargeback Evidence](https://pay1st-docs.carry1st.com/reference/download-chargeback-evidence.md): Use this API to get chargeback details for chargeback transactions through the Pay1st Gateway
+- [Staging and Production Environments](https://pay1st-docs.carry1st.com/reference/staging-environment.md): This section describes the production and sandbox environment details.
+- [Test Payment Details](https://pay1st-docs.carry1st.com/reference/test-payment-details.md): You may want to test your implementation via the Carry1st Shop in sandbox environment. We have provided some test card and bank details to allow testing of your integration.
+- [Handling Error Codes](https://pay1st-docs.carry1st.com/reference/handling-error-codes.md): These are a full list of error codes returned by the Pay1st APIs.
+- [Gateway - Generating Signatures](https://pay1st-docs.carry1st.com/reference/gateway-generating-signatures.md): These are the Pay1st best practices for generating signatures for gateway Integrations
+- [Gateway Migration Guide](https://pay1st-docs.carry1st.com/reference/gateway-migration-guide.md): This guide helps existing Partners migrate over to this version of Gateway Migration

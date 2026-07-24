@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/configuring-webhooks-and-callbacks
+spec_type: Webhooks
+note: >-
+  Pay1st documents a webhook/callback surface but publishes no AsyncAPI document. This captures
+  the webhook catalog. Webhooks and callbacks are configured in the Pay1st Console, or overridden
+  per-request on Create Payment Request (webhookUrl and callbackSuccess/Failure/Pending/Cancel
+  URLs). Incoming webhook signatures follow the same HMAC-SHA256 signing model as requests.
+webhooks:
+- name: User Info Webhook
+  direction: pay1st-to-partner
+  purpose: Validate a user who has selected a game/product in the Carry1st Shop (Shop integration).
+  docs: https://pay1st-docs.carry1st.com/reference/user-info-webhook
+- name: Summary Webhook
+  direction: pay1st-to-partner
+  purpose: Notify the partner that a payment completed and the customer's order should be fulfilled (Shop integration; replaced by Payment Webhook Events in Gateway v4).
+  docs: https://pay1st-docs.carry1st.com/reference/summary-webhook
+- name: Payment Webhook Events
+  direction: pay1st-to-partner
+  purpose: Server-to-server notification of payment status updates for the Gateway integration (v4 successor to Summary Webhook).
+  docs: https://pay1st-docs.carry1st.com/reference/configuring-webhooks-and-callbacks
+  fields: [reference, partnerReference, customerId, orderAmount, currencyCode, status]
+  statuses: [ABANDONED, CANCELLED, CHARGEBACK, FAILED, NEW, PAY_OFFLINE, PENDING, PENDING_INVESTIGATION, READY, REFUND, SEND_BIRTHDAY, SEND_PHONE, SEND_PIN, SEND_OTP, SEND_VALIDATION_TOKEN, SUCCESSFUL, VALIDATED]
+- name: Fulfilment Completion Webhook
+  direction: partner-to-pay1st
+  purpose: Notify the Pay1st Gateway about successful fulfilment completion.
+  docs: https://pay1st-docs.carry1st.com/reference/fulfilment-webhook
+- name: Refund Webhook Notifications
+  direction: pay1st-to-partner
+  purpose: Notify the partner of refund status changes (PENDING, PROCESSING, SUCCESSFUL, FAILED, REJECTED).
+  docs: https://pay1st-docs.carry1st.com/reference/refund-webhook-notifications
+- name: Chargeback Webhook Notifications
+  direction: pay1st-to-partner
+  purpose: Notify the partner of chargeback status changes.
+  docs: https://pay1st-docs.carry1st.com/reference/chargeback-webhooks

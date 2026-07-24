@@ -1,0 +1,20 @@
+{
+  "provider": "carry1st",
+  "sources": [
+    "carry1st-authentication-api-openapi.yml",
+    "carry1st-payment-methods-api-openapi.yml",
+    "carry1st-payments-api-openapi.yml",
+    "carry1st-refunds-api-openapi.yml"
+  ],
+  "outputs": [
+    "carry1st-authentication-api-openapi.yml",
+    "carry1st-payment-methods-api-openapi.yml",
+    "carry1st-payments-api-openapi.yml",
+    "carry1st-refunds-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

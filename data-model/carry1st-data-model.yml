@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+entities:
+- name: Payment
+  identifier: reference
+  id_format: 'C-<digits>-P (payment) / C-<digits>-T (transaction)'
+  fields: [reference, partnerReference, countryCode, currencyCode, amount, status, channelId, channelName]
+  statuses: [NEW, PENDING, SUCCESSFUL, FAILED, CANCELLED, ABANDONED]
+- name: PaymentMethod
+  identifier: channelId
+  fields: [channelId, channelName, countryCode, currencyCode]
+- name: Product
+  identifier: sku
+  fields: [sku, title, price, quantity, currencyCode]
+- name: Metadata
+  identifier: key
+  fields: [key, value]
+- name: Refund
+  identifier: refundReference
+  id_format: R-<digits>
+  fields: [refundReference, transactionReference, partnerReference, partnerRefundReference, amount, currencyCode, status, handlingType, fullRefund, reason, createdDate, lastModifiedDate]
+  statuses: [PENDING, PROCESSING, SUCCESSFUL, FAILED, REJECTED]
+relationships:
+- from: Payment
+  to: Product
+  type: has_many
+  via: products
+- from: Payment
+  to: Metadata
+  type: has_many
+  via: metadata
+- from: Payment
+  to: PaymentMethod
+  type: has_one
+  via: channelId
+- from: Refund
+  to: Payment
+  type: belongs_to
+  via: transactionReference
+- from: Payment
+  to: PartnerSettings
+  type: has_one
+  via: partnerSettings

@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/gateway-api-overview
+api: openapi/carry1st-pay1st-gateway-openapi.yml
+authentication:
+  style: API Key/Secret (HTTP Basic) exchanged for a short-lived Access Token
+  token_header: 'AccessToken: Bearer <AccessToken>'
+  detail: authentication/carry1st-authentication.yml
+request_signing:
+  supported: true
+  header: X-SIGNATURE
+  timestamp_header: X-TIMESTAMP
+  algorithm: HMAC-SHA256 (hex, lowercase)
+  scope: All non-authentication (mutating) Gateway requests.
+  construction: >-
+    Concatenate the ISO-8601 timestamp with the exact request JSON, then HMAC-SHA256 using the
+    Signing Key. The same timestamp must be sent in X-TIMESTAMP. The timestamp must be within
+    5 minutes of the request or it is rejected with 400.
+  docs: https://pay1st-docs.carry1st.com/reference/gateway-generating-signatures
+idempotency:
+  supported: true
+  mechanism: partnerReference
+  detail: >-
+    The createPaymentRequest partnerReference is required and "must be unique for the lifetime
+    of the integration" — it is the client-supplied idempotency/reconciliation key echoed back
+    on the Summary Webhook. Refunds accept an optional partnerRefundReference as the partner's
+    unique refund identifier.
+media_types:
+  auth: application/vnd.carry1st.payments.partnerauthentication+json
+  payment: application/vnd.carry1st.payments.payment+json
+  refund: application/vnd.carry1st.payments.refund+json
+  note: Pay1st uses versioned vendor media types to select the resource representation.
+versioning:
+  scheme: uri-path
+  current: v4.0
+  prior: [v3.1, v3.0]
+  detail: Docs are versioned by path (e.g. /v3.1/reference/...); the Gateway is at v4.0.
+error_envelope:
+  fields: [errorMessage, errorCode, sessionId]
+  detail: errors/carry1st-problem-types.yml
+rate_limiting:
+  signaled_via: HTTP 429 Too Many Requests
+  detail: No published rate-limit headers; 429 indicates the partner is being throttled.
+pagination:
+  supported: unknown
+  detail: No pagination scheme is documented for the current Gateway endpoints.
+callbacks:
+  detail: >-
+    Payment requests accept per-request callbackSuccessUrl/Failure/Pending/Cancel redirect URLs
+    and a webhookUrl for server-to-server notification; defaults are configured in the Console.

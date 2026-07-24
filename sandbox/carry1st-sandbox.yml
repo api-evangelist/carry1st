@@ -1,0 +1,78 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/test-payment-details
+environments:
+  staging:
+    pay1st_api: https://api-gateway.platform.stage.carry1st.com
+    console: https://backoffice.stage.carry1st.com
+    gateway: https://pay.stage.carry1st.com/
+    shop: https://shop.platform.stage.carry1st.com/
+  production:
+    pay1st_api: https://api-gateway.carry1st.com/api
+    console: https://backoffice.carry1st.com
+    gateway: https://pay.carry1st.com/
+    shop: https://shop.carry1st.com/
+notes: >-
+  The staging environment lets partners verify that payment methods work and that products
+  fulfil on the Carry1st Shop. Test payment values below are published verbatim by Pay1st for
+  the sandbox only. Some payment methods require test credentials from the Pay1st
+  Implementation Manager.
+test_values:
+- country: Egypt
+  method: Card
+  cards:
+  - {number: '4111 1111 1111 1111', expiry: 12/25, cvv: '123'}
+  - {number: '5343 2088 5018 5202', expiry: 12/25, cvv: '244'}
+- country: Egypt
+  method: Vodafone Wallet
+  credentials: {phone: '01010101010', pin: '123456', otp: '123456'}
+- country: Ghana
+  method: Card
+  cards:
+  - {number: '4111 1111 1111 1111', expiry: 12/25, cvv: '123'}
+  - {number: '5343 2088 5018 5202', expiry: 12/25, cvv: '244'}
+  - {number: '4084 0840 8408 4081', expiry: 06/25, cvv: '408'}
+- country: Kenya
+  method: Card
+  cards:
+  - {number: '4111 1111 1111 1111', expiry: 12/25, cvv: '123'}
+  - {number: '5343 2088 5018 5202', expiry: 12/25, cvv: '244'}
+  - {number: '4084 0840 8408 4081', expiry: 06/25, cvv: '408'}
+- country: Morocco
+  method: Card
+  cards:
+  - {number: '4000 0000 0000 0010', expiry: 12/31, cvv: '000', phone: '520123456'}
+  - {number: '5413 3300 0200 1429', expiry: 12/25, cvv: '360'}
+  - {number: '5438 8980 1456 0229', expiry: 10/31, cvv: '564', phone: '520123456'}
+- country: Nigeria
+  method: Card
+  cards:
+  - {number: '4084 0840 8408 4081', expiry: 06/25, cvv: '408'}
+- country: Nigeria
+  method: Kuda Bank
+  credentials: {phone: '234 8100000000', payid: '123456'}
+- country: Nigeria
+  method: Paga
+  credentials: {password: Carryfirst, phone: '8132790865'}
+- country: Nigeria
+  method: Palmpay
+  credentials: {phone: '8108080730', pin: '2580', otp: '1234'}
+- country: Nigeria
+  method: Opay QR
+  credentials: None needed
+- country: Nigeria
+  method: Verve Card
+  cards:
+  - {number: '5078 5078 5078 5078 12', expiry: 06/25, cvv: '081'}
+- country: South Africa
+  method: 1ForYouVoucher
+  credentials: Request test voucher codes from your Pay1st Implementation Manager
+- country: South Africa
+  method: Card
+  cards:
+  - {number: '4109 2302 0000 2009', expiry: 12/31, cvv: '531', pin: test123}
+  - {number: '4483 8700 0026 7447', expiry: 04/28, cvv: '470'}
+  - {number: '4483 8700 0026 7462', expiry: 04/28, cvv: '382'}
+- country: South Africa
+  method: Instant EFT
+  credentials: None needed

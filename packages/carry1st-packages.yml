@@ -1,0 +1,10 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/
+packages: []
+notes: >-
+  No first-party Pay1st / Carry1st client SDK was found on npm, PyPI, Maven Central, NuGet,
+  pkg.go.dev, RubyGems, Packagist, or crates.io, nor referenced in the Pay1st documentation.
+  The docs provide raw HMAC-SHA256 signature code samples (Bash/PHP/Java/C#/Python) for
+  developers to integrate directly against the REST API rather than a packaged SDK. No SDKs
+  pointer is wired because no official client library exists.

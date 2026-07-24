@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Pay1st Gateway API
+  version: 1.0.0
+extends: openapi/carry1st-pay1st-gateway-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-18'
+    x-apievangelist-source: https://pay1st-docs.carry1st.com/
+    x-apievangelist-note: >-
+      Spec DERIVED from the public Pay1st reference documentation by API Evangelist; endpoint
+      paths, headers, fields, and examples are transcribed from the docs, not a
+      provider-published OpenAPI.
+- target: $.info
+  update:
+    x-agentic-access: agentic-access/carry1st-agentic-access.yml
+    x-request-signing: HMAC-SHA256 over X-TIMESTAMP + JSON body via X-SIGNATURE header
+- target: $.paths['/api/pay1st/payments/create'].post
+  update:
+    x-idempotency:
+      key: partnerReference
+      note: partnerReference must be unique for the lifetime of the integration.
+- target: $.paths['/api/pay1st/transactions/refunds/create'].post
+  update:
+    x-lifecycle-status: beta

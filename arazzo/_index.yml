@@ -1,0 +1,8 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+workflows:
+- file: carry1st-collect-payment.yml
+  workflowId: collectPayment
+  title: Pay1st - collect a payment
+  summary: Authenticate, create a signed payment request, and confirm the payment status.

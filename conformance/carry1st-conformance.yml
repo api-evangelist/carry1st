@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: Auth is API Key/Secret (HTTP Basic) exchanged for a bearer Access Token; no OAuth2 flows.
+- id: openid-connect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom {errorMessage, errorCode, sessionId} envelope, not application/problem+json.
+- id: hmac-request-signing
+  conforms: true
+  evidence: All mutating requests require a hex HMAC-SHA256 X-SIGNATURE over X-TIMESTAMP + JSON body.
+- id: iso-8601-timestamps
+  conforms: true
+  evidence: X-TIMESTAMP and date fields use ISO-8601.
+- id: iso-3166-alpha2-country-codes
+  conforms: true
+  evidence: countryCode uses ISO-2 codes (ZA, NG, KE, EG, MA, GH).
+- id: iso-4217-currency-codes
+  conforms: true
+  evidence: currencyCode uses ISO-4217 codes (NGN, ZAR, etc.).
+- id: webhooks
+  conforms: true
+  evidence: User Info, Summary, Fulfilment, Refund, and Chargeback webhooks are documented.
+- id: pci-dss
+  conforms: unknown
+  evidence: Carry1st acts as Merchant of Record handling card data, but no public PCI attestation was found.

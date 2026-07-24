@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/carry1st-pay1st-gateway-openapi.yml
+skills:
+- file: carry1st-collect-payment.md
+  name: Collect a payment with Pay1st
+  api: openapi/carry1st-pay1st-gateway-openapi.yml
+  operations: [generateAccessToken, listPaymentMethods, createPaymentRequest, queryPaymentStatus]
+- file: carry1st-refund-payment.md
+  name: Refund a Pay1st transaction
+  api: openapi/carry1st-pay1st-gateway-openapi.yml
+  operations: [generateAccessToken, createRefundRequest]

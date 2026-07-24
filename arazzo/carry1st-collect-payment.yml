@@ -1,0 +1,64 @@
+arazzo: 1.0.1
+info:
+  title: Pay1st - collect a payment
+  version: 1.0.0
+  summary: Authenticate, create a signed payment request, and confirm the payment status.
+sourceDescriptions:
+- name: pay1st
+  url: ../openapi/carry1st-pay1st-gateway-openapi.yml
+  type: openapi
+workflows:
+- workflowId: collectPayment
+  summary: Mint an access token, create a payment, then poll its status to a terminal state.
+  description: >-
+    Uses the Pay1st Gateway to authenticate with API Key/Secret, optionally list payment
+    methods, create a signed payment request, and query the payment until it resolves.
+  inputs:
+    type: object
+    required: [countryCode, currencyCode, amount, partnerReference]
+    properties:
+      countryCode: {type: string, example: NG}
+      currencyCode: {type: string, example: NGN}
+      amount: {type: number, example: 100}
+      partnerReference: {type: string, example: 1119bf84-dc97-4be9-aa67-ec27d7003f07}
+  steps:
+  - stepId: authenticate
+    operationId: generateAccessToken
+    requestBody:
+      contentType: application/vnd.carry1st.payments.partnerauthentication+json
+      payload:
+        role: API_USER
+    outputs:
+      accessToken: $response.body#/accessToken
+  - stepId: createPayment
+    operationId: createPaymentRequest
+    requestBody:
+      contentType: application/vnd.carry1st.payments.payment+json
+      payload:
+        countryCode: $inputs.countryCode
+        currencyCode: $inputs.currencyCode
+        amount: $inputs.amount
+        partnerReference: $inputs.partnerReference
+        products:
+        - title: 10Credits
+          sku: '12345'
+          price: $inputs.amount
+          quantity: 1
+          currencyCode: $inputs.currencyCode
+        metadata:
+        - key: customerId
+          value: '1'
+    outputs:
+      reference: $response.body#/reference
+      status: $response.body#/status
+  - stepId: confirmPayment
+    operationId: queryPaymentStatus
+    parameters:
+    - name: reference
+      in: query
+      value: $steps.createPayment.outputs.reference
+    outputs:
+      finalStatus: $response.body#/status
+  outputs:
+    reference: $steps.createPayment.outputs.reference
+    finalStatus: $steps.confirmPayment.outputs.finalStatus

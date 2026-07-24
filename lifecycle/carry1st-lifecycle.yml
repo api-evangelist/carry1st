@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: searched
+source: https://pay1st-docs.carry1st.com/reference/gateway-migration-guide
+versioning:
+  scheme: uri-path
+  current: v4.0
+  prior: [v3.1, v3.0]
+  docs: https://pay1st-docs.carry1st.com/
+deprecation:
+  policy: >-
+    Pay1st runs versioned Gateway integrations with a documented migration path. A major
+    version is treated as a breaking change; the migration guide allows both the old and new
+    integration to run in parallel until the old one is decommissioned (validated in staging and
+    production, with at least one report generated on the new data before shredding old
+    credentials).
+  policy_url: https://pay1st-docs.carry1st.com/reference/gateway-migration-guide
+  sunset_header: false
+environments:
+  staging: https://api-gateway.platform.stage.carry1st.com
+  production: https://api-gateway.carry1st.com/api
+beta_features:
+- createRefundRequest (Refund API is documented as still in beta)
+status_page: null
+sla: null
+deprecated_operations: []
+notes: >-
+  No public status page or SLA document was found. Deprecation is handled through the versioned
+  migration guide rather than RFC 8594 Sunset/Deprecation headers.
