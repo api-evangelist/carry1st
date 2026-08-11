@@ -177,6 +177,8 @@ apis:
   - type: AgenticAccess
     url: agentic-access/carry1st-agentic-access.yml
 common:
+- type: Overlay
+  url: overlays/carry1st-pay1st-gateway-overlay.yaml
 - type: DeveloperPortal
   url: https://pay1st-docs.carry1st.com/
 - type: Documentation
