@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pay1st Gateway Authentication Payment Methods API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Payment Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/payments/methods",
+            "params": [
+              {
+                "name": "countryCode",
+                "value": "",
+                "type": "query",
+                "description": "ISO-2 country code, e.g. ZA, NG, KE, EG, MA, GH."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "AccessToken",
+              "value": "{{AccessToken}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List the supported local payment methods for a given country."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

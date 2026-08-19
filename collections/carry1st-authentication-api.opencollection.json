@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pay1st Gateway Authentication API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/auth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Authenticate with your API Key and API Secret (HTTP Basic) to obtain an Access Token and Refresh Token used for all subsequent Gateway requests."
+        },
+        {
+          "info": {
+            "name": "Generate Refresh Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/auth/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Extend the lifetime of an Access Token using the Refresh Token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

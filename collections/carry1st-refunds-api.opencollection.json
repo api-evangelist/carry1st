@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pay1st Gateway Authentication Refunds API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Refund Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/transactions/refunds/create",
+            "headers": [
+              {
+                "name": "X-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "X-TIMESTAMP",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "AccessToken",
+              "value": "{{AccessToken}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Request a refund against a processed transaction. If no amount is supplied a full refund is processed. Requires Access Token plus X-SIGNATURE and X-TIMESTAMP. NOTE: this API is in beta."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

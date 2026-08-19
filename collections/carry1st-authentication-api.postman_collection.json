@@ -1,0 +1,590 @@
+{
+  "item": [
+    {
+      "id": "f0aed67b-4897-4dfc-acf9-7016fc5f1851",
+      "name": "Authentication",
+      "description": {
+        "content": "Obtain and refresh access tokens for Gateway API requests.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f4f8cdf-db46-4bce-8f8a-f6260cca99f3",
+          "name": "Generate Access Token",
+          "request": {
+            "name": "Generate Access Token",
+            "description": {
+              "content": "Authenticate with your API Key and API Secret (HTTP Basic) to obtain an Access Token and Refresh Token used for all subsequent Gateway requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "auth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.carry1st.payments.partnerauthentication+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "46655d3e-6797-43ef-95eb-1be4e5514d59",
+              "name": "Access and refresh tokens issued.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"role\": \"API_USER\",\n  \"accessToken\": \"string\",\n  \"refreshToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df58e5c1-4332-41b6-a301-acaf3d172217",
+              "name": "Bad Request - check the payload, params, or signature/timestamp headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1d9a0e1-d746-4b5a-afa1-0e25aaaa13ef",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2e79a4d-cbc3-4a46-b4bc-987d6c8f65ab",
+              "name": "Forbidden - the credentials lack permission for this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6fbc920-8363-498f-8b1d-ccecde43a418",
+              "name": "Too Many Requests - the partner is being rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2816477-528e-4fbc-8df2-8e029382e369",
+          "name": "Generate Refresh Token",
+          "request": {
+            "name": "Generate Refresh Token",
+            "description": {
+              "content": "Extend the lifetime of an Access Token using the Refresh Token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "auth",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c9fb4470-4d10-4a2d-87e7-55bc452e6648",
+              "name": "A new Access Token has been issued.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\",\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"role\": \"API_USER\",\n  \"accessToken\": \"string\",\n  \"refreshToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c070127-7e34-404e-9bca-8ed4b8f32602",
+              "name": "Bad Request - check the payload, params, or signature/timestamp headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\",\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b5b2f73-4d26-414d-bd03-6fbe5804a06c",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"API_USER\",\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-gateway.carry1st.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9e72be12-9904-4963-9976-d7d1225fb426",
+    "name": "Pay1st Gateway Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.\n\nContact Support:\n Name: Pay1st Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

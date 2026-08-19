@@ -1,0 +1,619 @@
+{
+  "item": [
+    {
+      "id": "136dbed1-f776-43cc-8455-fbf379ff289c",
+      "name": "Payments",
+      "description": {
+        "content": "Create payment requests and query their status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "81e2a9dc-fa5f-4404-8ed0-b61d49583d26",
+          "name": "Create Payment Request",
+          "request": {
+            "name": "Create Payment Request",
+            "description": {
+              "content": "Create a payment request before a payment is made. Requires a valid Access Token plus an X-SIGNATURE (hex HMAC-SHA256) and X-TIMESTAMP header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "payments",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                "key": "X-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                "key": "X-TIMESTAMP",
+                "value": "<dateTime>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.carry1st.payments.payment+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "AccessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"countryCode\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"partnerReference\": \"<string>\",\n  \"products\": [\n    {\n      \"currencyCode\": \"<string>\",\n      \"price\": \"<number>\",\n      \"quantity\": \"<integer>\",\n      \"sku\": \"<string>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"currencyCode\": \"<string>\",\n      \"price\": \"<number>\",\n      \"quantity\": \"<integer>\",\n      \"sku\": \"<string>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"callbackSuccessUrl\": \"<string>\",\n  \"callbackFailureUrl\": \"<string>\",\n  \"callbackPendingUrl\": \"<string>\",\n  \"callbackCancelUrl\": \"<string>\",\n  \"webhookUrl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e5fcb42-549a-4cc4-9f2a-89c9defbbec6",
+              "name": "Payment request created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"countryCode\": \"NG\",\n  \"currencyCode\": \"NGN\",\n  \"amount\": 100,\n  \"partnerReference\": \"1119bf84-dc97-4be9-aa67-ec27d7003f07\",\n  \"products\": [\n    {\n      \"title\": \"10Credits\",\n      \"sku\": \"12345\",\n      \"price\": 100,\n      \"quantity\": 1,\n      \"currencyCode\": \"NGN\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"customerId\",\n      \"value\": \"1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reference\": \"C-113976984708914-P\",\n  \"partnerReference\": \"e27b3b79-5ab3-4c1b-806f-1428c08d8637\",\n  \"countryCode\": \"NG\",\n  \"currencyCode\": \"NGN\",\n  \"amount\": 100,\n  \"status\": \"NEW\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3743e0d2-ef35-4e6a-b9c8-6214f84770b4",
+              "name": "Bad Request - check the payload, params, or signature/timestamp headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"countryCode\": \"NG\",\n  \"currencyCode\": \"NGN\",\n  \"amount\": 100,\n  \"partnerReference\": \"1119bf84-dc97-4be9-aa67-ec27d7003f07\",\n  \"products\": [\n    {\n      \"title\": \"10Credits\",\n      \"sku\": \"12345\",\n      \"price\": 100,\n      \"quantity\": 1,\n      \"currencyCode\": \"NGN\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"customerId\",\n      \"value\": \"1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de8ad536-ba56-4fa2-b92d-267458603572",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"countryCode\": \"NG\",\n  \"currencyCode\": \"NGN\",\n  \"amount\": 100,\n  \"partnerReference\": \"1119bf84-dc97-4be9-aa67-ec27d7003f07\",\n  \"products\": [\n    {\n      \"title\": \"10Credits\",\n      \"sku\": \"12345\",\n      \"price\": 100,\n      \"quantity\": 1,\n      \"currencyCode\": \"NGN\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"customerId\",\n      \"value\": \"1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b403985-ce4b-4696-b108-51d704ffe129",
+          "name": "Query Payment Status",
+          "request": {
+            "name": "Query Payment Status",
+            "description": {
+              "content": "Query the current status of a payment using its Pay1st reference.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "reference",
+                  "value": "<string>",
+                  "description": "(Required) The Pay1st reference returned by createPaymentRequest."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "AccessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2643c960-8bfb-42b8-9e11-6d6c7e597b21",
+              "name": "The payment and its current status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reference",
+                      "value": "C-142710055596150-P"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reference\": \"string\",\n  \"partnerReference\": \"string\",\n  \"countryCode\": \"string\",\n  \"currencyCode\": \"string\",\n  \"amount\": 2077.9271966305278,\n  \"status\": \"SUCCESSFUL\",\n  \"channelId\": 2610,\n  \"channelName\": \"string\",\n  \"partnerSettings\": {\n    \"partnerId\": 7981,\n    \"webhookUrl\": \"string\",\n    \"successCallbackUrl\": \"string\",\n    \"failureCallbackUrl\": \"string\",\n    \"pendingCallbackUrl\": \"string\",\n    \"cancelCallbackUrl\": \"string\"\n  },\n  \"products\": [\n    {\n      \"currencyCode\": \"string\",\n      \"price\": 1384.8576217898178,\n      \"quantity\": 6376,\n      \"sku\": \"string\",\n      \"title\": \"string\"\n    },\n    {\n      \"currencyCode\": \"string\",\n      \"price\": 1128.5680733038062,\n      \"quantity\": 4798,\n      \"sku\": \"string\",\n      \"title\": \"string\"\n    }\n  ],\n  \"metadata\": [\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"key\": \"string\",\n      \"value\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4927108a-0dac-4cfa-8c02-000aa5c1bb31",
+              "name": "Bad Request - check the payload, params, or signature/timestamp headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reference",
+                      "value": "C-142710055596150-P"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f7ba078-b79e-4324-9fe0-c0d538539e8a",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reference",
+                      "value": "C-142710055596150-P"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cada42d-837d-413d-a425-17d992f9e103",
+              "name": "Forbidden - the credentials lack permission for this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reference",
+                      "value": "C-142710055596150-P"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf6be3e-0ef0-47f6-a482-4844fa5f082c",
+              "name": "Too Many Requests - the partner is being rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reference",
+                      "value": "C-142710055596150-P"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-gateway.carry1st.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "292da6e6-43b0-49f0-8d83-aaae08073394",
+    "name": "Pay1st Gateway Authentication Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.\n\nContact Support:\n Name: Pay1st Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

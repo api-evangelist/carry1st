@@ -2,9 +2,8 @@ generated: '2026-07-18'
 method: derived
 status: candidate
 source: openapi/carry1st-pay1st-gateway-openapi.yml
-note: >-
-  No official hosted/remote Pay1st MCP server was found. This is a candidate tool list derived
-  one-to-one from the documented Gateway operations, for use in generating an MCP server.
+note: No official hosted/remote Pay1st MCP server was found. This is a candidate tool list derived one-to-one
+  from the documented Gateway operations, for use in generating an MCP server.
 server:
   name: carry1st-pay1st
   transport: http
@@ -27,3 +26,9 @@ tools:
 - name: create_refund_request
   description: Request a refund against a processed transaction (beta).
   source_operation: openapi/carry1st-pay1st-gateway-openapi.yml#createRefundRequest
+deployment:
+  mode: none
+  verified: derived
+  tools: 6
+  checked: '2026-08-12'
+  source: catalog MCP census

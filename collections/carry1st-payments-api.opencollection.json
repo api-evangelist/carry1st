@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pay1st Gateway Authentication Payments API",
+    "version": "4.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Payment Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/payments/create",
+            "headers": [
+              {
+                "name": "X-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "X-TIMESTAMP",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "AccessToken",
+              "value": "{{AccessToken}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a payment request before a payment is made. Requires a valid Access Token plus an X-SIGNATURE (hex HMAC-SHA256) and X-TIMESTAMP header."
+        },
+        {
+          "info": {
+            "name": "Query Payment Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-gateway.carry1st.com/api/pay1st/payments",
+            "params": [
+              {
+                "name": "reference",
+                "value": "",
+                "type": "query",
+                "description": "The Pay1st reference returned by createPaymentRequest."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "AccessToken",
+              "value": "{{AccessToken}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Query the current status of a payment using its Pay1st reference."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

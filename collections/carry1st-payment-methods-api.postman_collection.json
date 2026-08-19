@@ -1,0 +1,246 @@
+{
+  "item": [
+    {
+      "id": "ce9f20cf-f07c-419a-9622-c77ed3ecc427",
+      "name": "Payment Methods",
+      "description": {
+        "content": "Discover the local payment methods available per country.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78debc48-9831-46b0-abdb-30457d7b4794",
+          "name": "List Payment Methods",
+          "request": {
+            "name": "List Payment Methods",
+            "description": {
+              "content": "List the supported local payment methods for a given country.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "payments",
+                "methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "countryCode",
+                  "value": "<string>",
+                  "description": "(Required) ISO-2 country code, e.g. ZA, NG, KE, EG, MA, GH."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "AccessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "105f8907-1430-46a9-8ad8-a1846d2ee88e",
+              "name": "A list of available payment methods.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "NG"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"channelId\": 108,\n    \"channelName\": \"Opay Wallet\",\n    \"countryCode\": \"NG\",\n    \"currencyCode\": \"NGN\"\n  },\n  {\n    \"channelId\": 108,\n    \"channelName\": \"Opay Wallet\",\n    \"countryCode\": \"NG\",\n    \"currencyCode\": \"NGN\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d261edf3-dd38-4e54-8aab-0f96d311ee2a",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "NG"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2bb71ef-1fca-4931-9dcb-557d2880292e",
+              "name": "Too Many Requests - the partner is being rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "payments",
+                    "methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "countryCode",
+                      "value": "NG"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-gateway.carry1st.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "58e1c718-c211-4c87-8bb2-df437afe6f23",
+    "name": "Pay1st Gateway Authentication Payment Methods API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.\n\nContact Support:\n Name: Pay1st Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}

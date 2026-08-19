@@ -1,0 +1,313 @@
+{
+  "item": [
+    {
+      "id": "cc426926-af42-4913-b486-1d6ae7a56624",
+      "name": "Refunds",
+      "description": {
+        "content": "Request refunds against processed transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d930659d-0383-4d40-8a7c-f68c0ff789e0",
+          "name": "Refund Request",
+          "request": {
+            "name": "Refund Request",
+            "description": {
+              "content": "Request a refund against a processed transaction. If no amount is supplied a full refund is processed. Requires Access Token plus X-SIGNATURE and X-TIMESTAMP. NOTE: this API is in beta.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pay1st",
+                "transactions",
+                "refunds",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                "key": "X-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                "key": "X-TIMESTAMP",
+                "value": "<dateTime>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.carry1st.payments.refund+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "AccessToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transactionReference\": \"<string>\",\n  \"partnerRefundReference\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"reason\": \"<string>\",\n  \"refundWebhookUrl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "daba5979-182f-4af0-9f4c-e0ad61cecbc4",
+              "name": "Refund request accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "transactions",
+                    "refunds",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactionReference\": \"C-12345-T\",\n  \"partnerRefundReference\": \"P-12345\",\n  \"amount\": 50,\n  \"reason\": \"Customer requested refund\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"refundReference\": \"string\",\n  \"transactionReference\": \"string\",\n  \"partnerReference\": \"string\",\n  \"partnerRefundReference\": \"string\",\n  \"amount\": 4507.534165140081,\n  \"currencyCode\": \"string\",\n  \"status\": \"PROCESSING\",\n  \"handlingType\": \"NO_REFUND\",\n  \"fullRefund\": true,\n  \"reason\": \"string\",\n  \"createdDate\": \"1983-03-09T23:53:49.148Z\",\n  \"lastModifiedDate\": \"2012-06-09T18:08:05.078Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b547da38-e255-4eb2-84f0-5a32f68bdf7b",
+              "name": "Bad Request - check the payload, params, or signature/timestamp headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "transactions",
+                    "refunds",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactionReference\": \"C-12345-T\",\n  \"partnerRefundReference\": \"P-12345\",\n  \"amount\": 50,\n  \"reason\": \"Customer requested refund\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34d6f206-5450-4b34-81f5-7c7f6254c014",
+              "name": "Unauthorized - check the API Key/Secret or Access Token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pay1st",
+                    "transactions",
+                    "refunds",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "AccessToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.",
+                    "key": "X-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Current time in ISO-8601, identical to the timestamp used to build the signature.",
+                    "key": "X-TIMESTAMP",
+                    "value": "<dateTime>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactionReference\": \"C-12345-T\",\n  \"partnerRefundReference\": \"P-12345\",\n  \"amount\": 50,\n  \"reason\": \"Customer requested refund\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorMessage\": \"string\",\n  \"errorCode\": \"string\",\n  \"sessionId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-gateway.carry1st.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ae479df1-81bc-4dde-874a-40203108aaa4",
+    "name": "Pay1st Gateway Authentication Refunds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.\n\nContact Support:\n Name: Pay1st Developer Documentation",
+      "type": "text/plain"
+    }
+  }
+}
