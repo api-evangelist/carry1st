@@ -4,8 +4,11 @@ info:
   version: 1.0.0
   summary: Authenticate, create a signed payment request, and confirm the payment status.
 sourceDescriptions:
-- name: pay1st
-  url: ../openapi/carry1st-pay1st-gateway-openapi.yml
+- name: authenticationApi
+  url: ../openapi/carry1st-authentication-api-openapi.yml
+  type: openapi
+- name: paymentsApi
+  url: ../openapi/carry1st-payments-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: collectPayment
