@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Pay1st Gateway Authentication Refunds API
   version: '4.0'
@@ -52,13 +52,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
     XTimestamp:
       name: X-TIMESTAMP
       in: header
@@ -67,6 +60,13 @@ components:
       schema:
         type: string
         format: date-time
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
   schemas:
     RefundRequest:
       type: object
@@ -85,19 +85,6 @@ components:
           type: string
         refundWebhookUrl:
           type: string
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     RefundResponse:
       type: object
       properties:
@@ -137,15 +124,28 @@ components:
         lastModifiedDate:
           type: string
           format: date-time
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
   responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
       content:
         application/json:
           schema:

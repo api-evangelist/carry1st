@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Pay1st Gateway Authentication Payments API
   version: '4.0'
@@ -100,13 +100,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   parameters:
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
     XTimestamp:
       name: X-TIMESTAMP
       in: header
@@ -115,46 +108,14 @@ components:
       schema:
         type: string
         format: date-time
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
   schemas:
-    Metadata:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    PaymentDetail:
-      allOf:
-      - $ref: '#/components/schemas/PaymentResponse'
-      - type: object
-        properties:
-          channelId:
-            type: integer
-          channelName:
-            type: string
-          partnerSettings:
-            type: object
-            properties:
-              partnerId:
-                type: integer
-              webhookUrl:
-                type: string
-              successCallbackUrl:
-                type: string
-              failureCallbackUrl:
-                type: string
-              pendingCallbackUrl:
-                type: string
-              cancelCallbackUrl:
-                type: string
-          products:
-            type: array
-            items:
-              $ref: '#/components/schemas/Product'
-          metadata:
-            type: array
-            items:
-              $ref: '#/components/schemas/Metadata'
     PaymentStatus:
       type: string
       description: Payment lifecycle status.
@@ -165,34 +126,6 @@ components:
       - FAILED
       - CANCELLED
       - ABANDONED
-    PaymentResponse:
-      type: object
-      properties:
-        reference:
-          type: string
-        partnerReference:
-          type: string
-        countryCode:
-          type: string
-        currencyCode:
-          type: string
-        amount:
-          type: number
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-    Product:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-        price:
-          type: number
-        quantity:
-          type: integer
-        sku:
-          type: string
-        title:
-          type: string
     CreatePaymentRequest:
       type: object
       required:
@@ -232,6 +165,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Metadata'
+    Product:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+        sku:
+          type: string
+        title:
+          type: string
+    PaymentResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+        partnerReference:
+          type: string
+        countryCode:
+          type: string
+        currencyCode:
+          type: string
+        amount:
+          type: number
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+    Metadata:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    PaymentDetail:
+      allOf:
+      - $ref: '#/components/schemas/PaymentResponse'
+      - type: object
+        properties:
+          channelId:
+            type: integer
+          channelName:
+            type: string
+          partnerSettings:
+            type: object
+            properties:
+              partnerId:
+                type: integer
+              webhookUrl:
+                type: string
+              successCallbackUrl:
+                type: string
+              failureCallbackUrl:
+                type: string
+              pendingCallbackUrl:
+                type: string
+              cancelCallbackUrl:
+                type: string
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+          metadata:
+            type: array
+            items:
+              $ref: '#/components/schemas/Metadata'
     Error:
       type: object
       description: Standard Pay1st error envelope.
@@ -246,26 +246,26 @@ components:
           type: string
           description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
   responses:
-    Forbidden:
-      description: Forbidden - the credentials lack permission for this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Too Many Requests - the partner is being rate limited.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
       content:
         application/json:
           schema:
