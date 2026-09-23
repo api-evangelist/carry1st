@@ -1,10 +1,7 @@
 {
   "provider": "carry1st",
   "sources": [
-    "carry1st-authentication-api-openapi.yml",
-    "carry1st-payment-methods-api-openapi.yml",
-    "carry1st-payments-api-openapi.yml",
-    "carry1st-refunds-api-openapi.yml"
+    "_original/carry1st-pay1st-gateway-openapi.yml"
   ],
   "outputs": [
     "carry1st-authentication-api-openapi.yml",
@@ -16,11 +13,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "carry1st-authentication-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "carry1st-payment-methods-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "carry1st-payments-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "carry1st-refunds-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "carry1st-pay1st-gateway-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "carry1st-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "carry1st-payment-methods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "carry1st-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "carry1st-refunds-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

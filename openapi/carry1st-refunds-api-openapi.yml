@@ -1,8 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Pay1st Gateway Authentication Refunds API
+  title: Pay1st Gateway Refunds API
   version: '4.0'
-  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana. Partners authenticate with an API Key/Secret to obtain a short-lived Access Token, sign each mutating request with an HMAC-SHA256 signature, create payment requests, query payment status, and issue refunds. Carry1st acts as Merchant of Record, managing compliance, tax, FX, and risk. This OpenAPI was DERIVED by API Evangelist from the public Pay1st reference documentation (endpoint paths, headers, request and response fields, and examples verbatim from the docs); it is not a provider-published spec.
+  description: The Pay1st Gateway API from Carry1st enables digital-content and mobile-game partners to accept payments across Africa via 120+ local payment methods in South Africa, Nigeria, Kenya, Egypt, Morocco, and Ghana.
   contact:
     name: Pay1st Developer Documentation
     url: https://pay1st-docs.carry1st.com/
@@ -51,22 +51,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    XTimestamp:
-      name: X-TIMESTAMP
-      in: header
-      required: true
-      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
-      schema:
-        type: string
-        format: date-time
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
   schemas:
     RefundRequest:
       type: object
@@ -137,6 +121,22 @@ components:
         sessionId:
           type: string
           description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
   responses:
     BadRequest:
       description: Bad Request - check the payload, params, or signature/timestamp headers.
