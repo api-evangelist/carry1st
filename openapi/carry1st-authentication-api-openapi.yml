@@ -76,6 +76,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    TokenResponse:
+      type: object
+      properties:
+        role:
+          type: string
+          example: API_USER
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
     Error:
       type: object
       description: Standard Pay1st error envelope.
@@ -99,25 +109,9 @@ components:
           enum:
           - API_USER
           description: Must be set to API_USER.
-    TokenResponse:
-      type: object
-      properties:
-        role:
-          type: string
-          example: API_USER
-        accessToken:
-          type: string
-        refreshToken:
-          type: string
   responses:
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - the credentials lack permission for this resource.
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
       content:
         application/json:
           schema:
@@ -128,8 +122,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
       content:
         application/json:
           schema:
