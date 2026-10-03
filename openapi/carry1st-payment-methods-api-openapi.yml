@@ -47,20 +47,20 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     PaymentMethod:
       type: object
       properties:
@@ -76,19 +76,19 @@ components:
         currencyCode:
           type: string
           example: NGN
-  responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Too Many Requests - the partner is being rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
   securitySchemes:
     basicAuth:
       type: http

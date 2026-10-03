@@ -51,19 +51,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     RefundResponse:
       type: object
@@ -135,6 +122,13 @@ components:
         refundWebhookUrl:
           type: string
   parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
     XTimestamp:
       name: X-TIMESTAMP
       in: header
@@ -143,13 +137,19 @@ components:
       schema:
         type: string
         format: date-time
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

@@ -75,17 +75,42 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    TokenResponse:
+    TokenRequest:
       type: object
+      required:
+      - role
       properties:
         role:
           type: string
-          example: API_USER
-        accessToken:
-          type: string
-        refreshToken:
-          type: string
+          enum:
+          - API_USER
+          description: Must be set to API_USER.
     Error:
       type: object
       description: Standard Pay1st error envelope.
@@ -99,41 +124,16 @@ components:
         sessionId:
           type: string
           description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
-    TokenRequest:
+    TokenResponse:
       type: object
-      required:
-      - role
       properties:
         role:
           type: string
-          enum:
-          - API_USER
-          description: Must be set to API_USER.
-  responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Too Many Requests - the partner is being rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - the credentials lack permission for this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example: API_USER
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

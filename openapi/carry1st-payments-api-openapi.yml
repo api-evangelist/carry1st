@@ -100,6 +100,39 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Metadata:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
+    Product:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+        sku:
+          type: string
+        title:
+          type: string
     PaymentDetail:
       allOf:
       - $ref: '#/components/schemas/PaymentResponse'
@@ -132,64 +165,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Metadata'
-    Product:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-        price:
-          type: number
-        quantity:
-          type: integer
-        sku:
-          type: string
-        title:
-          type: string
-    PaymentStatus:
-      type: string
-      description: Payment lifecycle status.
-      enum:
-      - NEW
-      - PENDING
-      - SUCCESSFUL
-      - FAILED
-      - CANCELLED
-      - ABANDONED
-    Metadata:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
-    PaymentResponse:
-      type: object
-      properties:
-        reference:
-          type: string
-        partnerReference:
-          type: string
-        countryCode:
-          type: string
-        currencyCode:
-          type: string
-        amount:
-          type: number
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
     CreatePaymentRequest:
       type: object
       required:
@@ -229,21 +204,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Metadata'
+    PaymentResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+        partnerReference:
+          type: string
+        countryCode:
+          type: string
+        currencyCode:
+          type: string
+        amount:
+          type: number
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+    PaymentStatus:
+      type: string
+      description: Payment lifecycle status.
+      enum:
+      - NEW
+      - PENDING
+      - SUCCESSFUL
+      - FAILED
+      - CANCELLED
+      - ABANDONED
   responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Too Many Requests - the partner is being rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - the credentials lack permission for this resource.
       content:
         application/json:
           schema:
@@ -254,7 +242,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
     XTimestamp:
       name: X-TIMESTAMP
       in: header
@@ -263,13 +270,6 @@ components:
       schema:
         type: string
         format: date-time
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http
