@@ -51,6 +51,35 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
+  responses:
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     RefundResponse:
       type: object
@@ -91,19 +120,6 @@ components:
         lastModifiedDate:
           type: string
           format: date-time
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     RefundRequest:
       type: object
       required:
@@ -121,35 +137,19 @@ components:
           type: string
         refundWebhookUrl:
           type: string
-  parameters:
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
-    XTimestamp:
-      name: X-TIMESTAMP
-      in: header
-      required: true
-      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
-      schema:
-        type: string
-        format: date-time
-  responses:
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
   securitySchemes:
     basicAuth:
       type: http

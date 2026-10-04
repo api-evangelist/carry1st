@@ -107,64 +107,6 @@ components:
           type: string
         value:
           type: string
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
-    Product:
-      type: object
-      properties:
-        currencyCode:
-          type: string
-        price:
-          type: number
-        quantity:
-          type: integer
-        sku:
-          type: string
-        title:
-          type: string
-    PaymentDetail:
-      allOf:
-      - $ref: '#/components/schemas/PaymentResponse'
-      - type: object
-        properties:
-          channelId:
-            type: integer
-          channelName:
-            type: string
-          partnerSettings:
-            type: object
-            properties:
-              partnerId:
-                type: integer
-              webhookUrl:
-                type: string
-              successCallbackUrl:
-                type: string
-              failureCallbackUrl:
-                type: string
-              pendingCallbackUrl:
-                type: string
-              cancelCallbackUrl:
-                type: string
-          products:
-            type: array
-            items:
-              $ref: '#/components/schemas/Product'
-          metadata:
-            type: array
-            items:
-              $ref: '#/components/schemas/Metadata'
     CreatePaymentRequest:
       type: object
       required:
@@ -204,6 +146,74 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Metadata'
+    Product:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+        sku:
+          type: string
+        title:
+          type: string
+    PaymentStatus:
+      type: string
+      description: Payment lifecycle status.
+      enum:
+      - NEW
+      - PENDING
+      - SUCCESSFUL
+      - FAILED
+      - CANCELLED
+      - ABANDONED
+    PaymentDetail:
+      allOf:
+      - $ref: '#/components/schemas/PaymentResponse'
+      - type: object
+        properties:
+          channelId:
+            type: integer
+          channelName:
+            type: string
+          partnerSettings:
+            type: object
+            properties:
+              partnerId:
+                type: integer
+              webhookUrl:
+                type: string
+              successCallbackUrl:
+                type: string
+              failureCallbackUrl:
+                type: string
+              pendingCallbackUrl:
+                type: string
+              cancelCallbackUrl:
+                type: string
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+          metadata:
+            type: array
+            items:
+              $ref: '#/components/schemas/Metadata'
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     PaymentResponse:
       type: object
       properties:
@@ -219,16 +229,22 @@ components:
           type: number
         status:
           $ref: '#/components/schemas/PaymentStatus'
-    PaymentStatus:
-      type: string
-      description: Payment lifecycle status.
-      enum:
-      - NEW
-      - PENDING
-      - SUCCESSFUL
-      - FAILED
-      - CANCELLED
-      - ABANDONED
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
   responses:
     TooManyRequests:
       description: Too Many Requests - the partner is being rate limited.
@@ -254,22 +270,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
-    XTimestamp:
-      name: X-TIMESTAMP
-      in: header
-      required: true
-      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
-      schema:
-        type: string
-        format: date-time
   securitySchemes:
     basicAuth:
       type: http

@@ -101,6 +101,16 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    TokenResponse:
+      type: object
+      properties:
+        role:
+          type: string
+          example: API_USER
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
     TokenRequest:
       type: object
       required:
@@ -124,16 +134,6 @@ components:
         sessionId:
           type: string
           description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
-    TokenResponse:
-      type: object
-      properties:
-        role:
-          type: string
-          example: API_USER
-        accessToken:
-          type: string
-        refreshToken:
-          type: string
   securitySchemes:
     basicAuth:
       type: http
