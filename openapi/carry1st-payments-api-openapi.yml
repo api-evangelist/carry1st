@@ -99,14 +99,48 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  parameters:
+    XSignature:
+      name: X-SIGNATURE
+      in: header
+      required: true
+      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
+      schema:
+        type: string
+    XTimestamp:
+      name: X-TIMESTAMP
+      in: header
+      required: true
+      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
+      schema:
+        type: string
+        format: date-time
+  responses:
+    BadRequest:
+      description: Bad Request - check the payload, params, or signature/timestamp headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - the credentials lack permission for this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - check the API Key/Secret or Access Token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests - the partner is being rate limited.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Metadata:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
     CreatePaymentRequest:
       type: object
       required:
@@ -146,6 +180,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Metadata'
+    Error:
+      type: object
+      description: Standard Pay1st error envelope.
+      properties:
+        errorMessage:
+          type: string
+          description: A message detailing the error that occurred.
+        errorCode:
+          type: string
+          description: A code to identify the error source.
+        sessionId:
+          type: string
+          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     Product:
       type: object
       properties:
@@ -159,16 +206,6 @@ components:
           type: string
         title:
           type: string
-    PaymentStatus:
-      type: string
-      description: Payment lifecycle status.
-      enum:
-      - NEW
-      - PENDING
-      - SUCCESSFUL
-      - FAILED
-      - CANCELLED
-      - ABANDONED
     PaymentDetail:
       allOf:
       - $ref: '#/components/schemas/PaymentResponse'
@@ -201,19 +238,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Metadata'
-    Error:
-      type: object
-      description: Standard Pay1st error envelope.
-      properties:
-        errorMessage:
-          type: string
-          description: A message detailing the error that occurred.
-        errorCode:
-          type: string
-          description: A code to identify the error source.
-        sessionId:
-          type: string
-          description: Session identifier to share with the Pay1st Implementation Manager for troubleshooting.
     PaymentResponse:
       type: object
       properties:
@@ -229,47 +253,23 @@ components:
           type: number
         status:
           $ref: '#/components/schemas/PaymentStatus'
-  parameters:
-    XSignature:
-      name: X-SIGNATURE
-      in: header
-      required: true
-      description: Hex-encoded HMAC-SHA256 signature of the timestamp + request JSON.
-      schema:
-        type: string
-    XTimestamp:
-      name: X-TIMESTAMP
-      in: header
-      required: true
-      description: Current time in ISO-8601, identical to the timestamp used to build the signature.
-      schema:
-        type: string
-        format: date-time
-  responses:
-    TooManyRequests:
-      description: Too Many Requests - the partner is being rate limited.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request - check the payload, params, or signature/timestamp headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - check the API Key/Secret or Access Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden - the credentials lack permission for this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Metadata:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    PaymentStatus:
+      type: string
+      description: Payment lifecycle status.
+      enum:
+      - NEW
+      - PENDING
+      - SUCCESSFUL
+      - FAILED
+      - CANCELLED
+      - ABANDONED
   securitySchemes:
     basicAuth:
       type: http
