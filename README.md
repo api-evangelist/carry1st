@@ -64,6 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Carry1st is a company surfaced as a portfolio company of a16z and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Carry1st is Africa's leading mobile games publisher and digital commerce platform, headquartered in South Africa and operating across high-growth African markets including Nigeria, South Africa, Kenya, Ghana, Egypt, and Morocco. Beyond publishing and distributing mobile games from partners such as Riot Games, Activision, and Supercell, Carry1st operates Pay1st, a payment gateway that lets digital-content and game developers accept payments through 120+ local payment methods across six African geographies. Pay1st offers a single unified API, acts as Merchant of Record (handling compliance, taxation, FX, and risk so businesses collect in USD), and supports hosted-payment, game-client, and Carry1st Shop marketplace integration styles. Carry1st is backed by a16z. This profile was enriched by the API Evangelist pipeline from the public Pay1st developer documentation.
 
-Backed by: a16z
+**Areas:** Company · Payments · Payment Gateway · Fintech · Gaming · Mobile Games · Africa · Digital Commerce · Merchant of Record · Games Publishing
+
+## Carry1st on APIs.io
+
+Everything profiled for Carry1st is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/carry1st/](https://apis.io/providers/carry1st/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Carry1st Authentication API](https://apis.io/apis/carry1st/carry1st-authentication-api/) — Obtain and refresh access tokens for Gateway API requests.
+- [Carry1st Payment Methods API](https://apis.io/apis/carry1st/carry1st-payment-methods-api/) — Discover the local payment methods available per country.
+- [Carry1st Payments API](https://apis.io/apis/carry1st/carry1st-payments-api/) — Create payment requests and query their status.
+- [Carry1st Refunds API](https://apis.io/apis/carry1st/carry1st-refunds-api/) — Request refunds against processed transactions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (1)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Pay1st - collect a payment](https://apis.io/arazzos/carry1st/carry1st-collect-payment/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Carry1St Pay1St Webhooks](https://apis.io/asyncapis/carry1st/carry1st-pay1st-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [carry1st-pay1st](https://apis.io/servers/carry1st/carry1st-pay1st/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Carry1St Agentic Access](https://apis.io/agentic-access/carry1st/carry1st-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Pay1st Gateway Authentication API](https://apis.io/collections/carry1st/open-carry1st-authentication-api/)
+- [Pay1st Gateway Authentication Payment Methods API](https://apis.io/collections/carry1st/open-carry1st-payment-methods-api/)
+- [Pay1st Gateway Authentication Payments API](https://apis.io/collections/carry1st/open-carry1st-payments-api/)
+- [Pay1st Gateway Authentication Refunds API](https://apis.io/collections/carry1st/open-carry1st-refunds-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Carry1St Pay1St Gateway Overlay](https://apis.io/overlays/carry1st/carry1st-pay1st-gateway-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Carry1St Authentication](https://apis.io/security/carry1st/carry1st-authentication/)
+- [Carry1St Domain Security](https://apis.io/security/carry1st/carry1st-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.carry1st.com/)
+- [Documentation](https://pay1st-docs.carry1st.com/)
+- [Getting started](https://pay1st-docs.carry1st.com/reference/gateway-integration-step-by-step-checklist)
+- [API reference](https://pay1st-docs.carry1st.com/reference/gateway-api-overview)
+- [Support](https://www.carry1st.com/contact)
+- [Blog](https://www.carry1st.com/blog)
+- [Terms of service](https://www.carry1st.com/terms-of-service)
+- [Privacy policy](https://www.carry1st.com/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 30.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 22.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 27.6 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 21.1 |
+
+**Agent readiness 35.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/carry1st/](https://apis.io/providers/carry1st/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Carry1st: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/carry1st/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
